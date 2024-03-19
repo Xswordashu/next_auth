@@ -2,9 +2,11 @@
 import Link from 'next/link'
 import React from 'react'
 import { useRouter } from 'next/navigation'
+
 import axios from 'axios'
 
 const LoginPage = () => {
+    const router = useRouter();
     const [user, SetUser] = React.useState({
         email:"",
         password:"",
@@ -12,8 +14,17 @@ const LoginPage = () => {
     })
 
     const onLogin = async()=>{
-        console.log(user);
+        //console.log(user);
+        try{
+          const response = await axios.post("/api/user/login", user);
+          //console.log('res', response);
+          router.push('/profile');
+
+        }catch(error){
+            console.log(error);
+        }
     }
+
   return (
     <div className='bg-black text-white flex flex-col justify-center items-center h-screen'>
           <h1>LOGIN PAGE</h1> 
